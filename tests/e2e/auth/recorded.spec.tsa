@@ -1,0 +1,496 @@
+import { test, expect } from '@playwright/test';
+import { Generic } from '../../../PO/methods/generic';
+import { landingPage } from '../../../PO/pages/landing';
+import { common } from "../../../fixtures/common";
+
+let method: Generic;
+let landing: landingPage;
+test.beforeEach(async ({ page }) => {
+  method = new Generic(page);
+  landing = new landingPage(page);
+
+
+  await method.visitPage(common.url.e2e.landing);
+  await method.isNotVisible(landing.calendarSpinner);
+  await method.waitForPageToFullLoad();
+  await page.route('**', route => route.continue());
+});
+
+test('calendar view', async ({ page }) => {
+  //header menu
+  await expect(page.getByTestId('landingLogo')).toBeVisible();
+  await expect(page.locator('#kt_header_menu_desktop a').filter({ hasText: 'Calendar' })).toBeVisible();
+  await expect(page.locator('#kt_header_menu_desktop a').filter({ hasText: 'Sessions' })).toBeVisible();
+  await expect(page.locator('#kt_header_menu_desktop a').filter({ hasText: 'Clients' })).toBeVisible();
+  await expect(page.locator('#kt_header_menu_desktop a').filter({ hasText: 'FAQs' })).toBeVisible();
+  await expect(page.getByTestId('createSessionModalButton')).toBeVisible();
+  await expect(page.getByTestId('settingsButton').getByRole('combobox')).toBeVisible();
+  await expect(page.getByTestId('userMenuButton')).toBeVisible();
+
+  //calendar
+
+  await expect(page.getByRole('heading', { name: 'Calendar' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Filters' })).toBeVisible();
+
+  await expect(page.getByRole('button', { name: 'Previous month' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Next month' })).toBeVisible();
+
+
+  await expect(page.getByRole('heading', { name: 'April' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'today' })).toBeVisible();
+  await page.locator('div').filter({ hasText: /^April 2025$/ }).click();
+
+
+  await expect(page.getByRole('button', { name: 'month', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'week' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'day', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'list' })).toBeVisible();
+  //month
+  await page.getByRole('button', { name: 'month', exact: true }).click();
+
+  await expect(page.getByRole('columnheader', { name: 'Monday' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Tuesday' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Wednesday' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Thursday' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Friday' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Saturday' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Sunday' })).toBeVisible();
+
+  //week
+  await page.getByRole('button', { name: 'week' }).click();
+
+  await expect(page.getByRole('button', { name: 'Previous week' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Next week' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /^.*([A-Za-z0-9]+( [A-Za-z0-9]+)+).*$/ })).toBeVisible();
+
+
+  await expect(page.getByRole('columnheader', { name: 'Mon' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Tue' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Wed' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Thu' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Fri' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Sat' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Sun' })).toBeVisible();
+
+
+  await expect(page.locator('td').filter({ hasText: /^00:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^01:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^02:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^03:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^04:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^05:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^06:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^07:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^08:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^09:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^10:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^11:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^12:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^13:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^14:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^15:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^16:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^17:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^18:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^19:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^20:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^21:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^22:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^23:00$/ })).toBeVisible();
+
+  //day
+
+  await page.getByRole('button', { name: 'day', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'today' })).toBeVisible();
+
+  await expect(page.getByRole('columnheader', { name: /^[A-Za-z]+$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^00:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^01:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^02:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^03:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^04:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^05:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^06:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^07:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^08:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^09:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^10:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^11:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^12:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^13:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^14:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^15:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^16:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^17:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^18:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^19:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^20:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^21:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^22:00$/ })).toBeVisible();
+  await expect(page.locator('td').filter({ hasText: /^23:00$/ })).toBeVisible();
+
+  //list
+  await page.getByRole('button', { name: 'list' }).click();
+  await expect(page.getByRole('heading', { name: /^(0?[1-9]|[12][0-9]|3[01])-[A-Za-z]+-[0-9]+\s[A-Za-z]+.*(0?[1-9]|[12][0-9]|3[01])-[A-Za-z]+-[0-9]+$/ })).toBeVisible();
+
+  //filters
+  await page.getByRole('button', { name: 'Filters' }).click();
+  await expect(page.getByText('Session Types', { exact: true })).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Live Remote' })).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Live In-Person' })).toBeVisible();
+  await expect(page.getByText('Participation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Individual')).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Group' })).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Individual' })).toBeVisible();
+  await expect(page.getByText('Clients').nth(2)).toBeVisible();
+  await expect(page.getByRole('textbox')).toBeVisible();
+  await page.getByLabel('Live Remote').check();
+  await expect(page.getByLabel('Live Remote')).toBeChecked();
+  await page.getByLabel('Live Remote').uncheck();
+  await expect(page.getByLabel('Live Remote')).not.toBeChecked();
+  await page.getByLabel('Live In-Person').check();
+  await expect(page.getByLabel('Live In-Person')).toBeChecked();
+  await page.getByLabel('Live In-Person').uncheck();
+  await expect(page.getByLabel('Live In-Person')).not.toBeChecked();
+  await page.getByLabel('Individual').check();
+  await expect(page.getByLabel('Individual')).toBeChecked();
+  await page.getByLabel('Individual').uncheck();
+  await expect(page.getByLabel('Individual')).not.toBeChecked();
+  await page.getByLabel('Group').check();
+  await expect(page.getByLabel('Group')).toBeChecked();
+  await page.getByLabel('Group').uncheck();
+  await expect(page.getByLabel('Group')).not.toBeChecked();
+});
+
+test('sessions', async ({ page }) => {
+  //session tab
+  await page.locator('#kt_header_menu_desktop a').filter({ hasText: 'Sessions' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Sessions' })).toBeVisible();
+
+  await expect(page.locator('.sessions-list-title-break')).toBeVisible();
+
+  await expect(page.getByRole('button', { name: 'Past' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Future' })).toBeVisible();
+  await expect(page.getByPlaceholder('Search by title or activity')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Filters' })).toBeVisible();
+  //per page component
+  await expect(page.getByText('Items per page:').first()).toBeVisible();
+  await expect(page.locator('button').filter({ hasText: '10' }).first()).toBeVisible();
+
+  //pagination
+  await expect(page.locator('.page-item').first()).toBeVisible();
+  await expect(page.locator('.pagination > li:nth-child(2)').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 1').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 2').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 3').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 4').first()).toBeVisible();
+  await expect(page.getByRole('separator').first()).toBeVisible();
+  await expect(page.getByLabel('Go to next page').first()).toBeVisible();
+  await expect(page.getByLabel('Go to last page').first()).toBeVisible();
+
+  //table
+
+  await expect(page.getByRole('columnheader', { name: 'Type (Click to sort ascending)', exact: true })).toBeVisible();
+
+  await expect(page.getByRole('columnheader', { name: 'Session Title (Click to sort' })).toBeVisible();
+
+  await expect(page.getByRole('columnheader', { name: 'Activity Type (Click to sort' })).toBeVisible();
+
+  await expect(page.getByRole('columnheader', { name: 'Scheduled (Click to sort' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Recurrence (Click to sort' })).toBeVisible();
+
+  await expect(page.getByRole('button', { name: 'Filters' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Filters' }).click();
+  await expect(page.getByText('Clients').nth(2)).toBeVisible();
+  await page.locator('tags').getByRole('textbox').click();
+  await expect(page.getByRole('listbox')).toBeVisible();
+  await page.getByText('Clients').nth(2).click();
+  await expect(page.getByText('Session Types', { exact: true })).toBeVisible();
+
+  await expect(page.locator('label').filter({ hasText: 'Live Remote' })).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Live In-Person' })).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Solo' })).toBeVisible();
+  await expect(page.getByText('Status', { exact: true })).toBeVisible();
+  await expect(page.getByText('Completed (Analytics)')).toBeVisible();
+  await expect(page.getByText('Not Completed (No Analytics)')).toBeVisible();
+  await expect(page.getByText('Participation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Individual')).toBeVisible();
+  await expect(page.getByText('Group')).toBeVisible();
+  await expect(page.getByText('Scheduled Duration', { exact: true })).toBeVisible();
+  await expect(page.getByText('Min', { exact: true })).toBeVisible();
+  await expect(page.getByText('Max')).toBeVisible();
+  await expect(page.getByPlaceholder('mm:ss').first()).toBeVisible();
+  await expect(page.getByPlaceholder('mm:ss').nth(1)).toBeVisible();
+  await expect(page.getByText('Activity type', { exact: true })).toBeVisible();
+  await expect(page.locator('div:nth-child(16) > .ts-dropdown-menu-button')).toBeVisible();
+
+  //legend
+
+  await expect(page.getByText('Session Types:')).toBeVisible();
+  await expect(page.locator('.session-type > .class-icon').first()).toBeVisible();
+  await expect(page.locator('#app').getByText('Live Remote')).toBeVisible();
+  await expect(page.locator('div:nth-child(3) > div > .session-type > .class-icon')).toBeVisible();
+  await expect(page.locator('#app').getByText('Live In-Person')).toBeVisible();
+  await expect(page.locator('div:nth-child(4) > div > .session-type > .class-icon')).toBeVisible();
+  await expect(page.locator('#app').getByText('Solo', { exact: true })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Future' }).click();
+  await page.getByPlaceholder('Search by title or activity').click();
+  await page.getByPlaceholder('Search by title or activity').fill('future');
+  await expect(page.getByRole('alert')).toContainText("You don't have any future sessions or any that match your filtering criteria.");
+});
+
+test('clients', async ({ page }) => {
+  await page.locator('#kt_header_menu_desktop a').filter({ hasText: 'Clients' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Clients' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Invite Clients' })).toBeVisible();
+
+  await expect(page.getByRole('link', { name: 'Clients' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Invitations' })).toBeVisible();
+
+  await expect(page.getByPlaceholder('Search first/last name')).toBeVisible();
+
+  await expect(page.getByText('Items per page:').first()).toBeVisible();
+  await expect(page.getByRole('combobox').nth(2)).toBeVisible();
+  await expect(page.locator('.page-item').first()).toBeVisible();
+  await expect(page.locator('.pagination > li:nth-child(2)').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 1').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 2').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page 3').first()).toBeVisible();
+  await expect(page.getByLabel('Go to next page').first()).toBeVisible();
+  await expect(page.getByLabel('Go to last page').first()).toBeVisible();
+  await expect(page.getByLabel('Toggle')).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'First Name (Click to sort' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Last Name (Click to sort' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Join date (Click to sort' })).toBeVisible();
+  await expect(page.getByLabel('Actions')).toBeVisible();
+
+  await expect(page.getByRole('row', { name: 'A Spott B Customer 1 Thu, 18-' }).getByLabel('')).toBeVisible();
+  await expect(page.getByRole('row', { name: 'A Spott B Customer 1 Thu, 18-' }).getByRole('img')).toBeVisible();
+  await expect(page.getByText('A Spott')).toBeVisible();
+  await expect(page.getByText('B Customer')).toBeVisible();
+  await expect(page.getByText('Thu, 18-Jul-2413:').first()).toBeVisible();
+  await expect(page.getByRole('row', { name: 'A Spott B Customer 1 Thu, 18-' }).getByRole('button').first()).toBeVisible();
+  await expect(page.getByRole('row', { name: 'A Spott B Customer 1 Thu, 18-' }).getByRole('button').nth(1)).toBeVisible();
+  await page.getByRole('row', { name: 'A Spott B Customer 1 Thu, 18-' }).getByLabel('').check();
+  await expect(page.getByRole('cell', { name: 'Age --- Weight --- Resting HR' }).getByRole('img').first()).toBeVisible();
+  await expect(page.getByText('Age', { exact: true })).toBeVisible();
+  await expect(page.getByText('---').first()).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Age --- Weight --- Resting HR' }).getByRole('img').nth(1)).toBeVisible();
+  await expect(page.getByText('Weight')).toBeVisible();
+  await expect(page.getByText('---').nth(1)).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Age --- Weight --- Resting HR' }).getByRole('img').nth(2)).toBeVisible();
+  await expect(page.getByText('Resting HR')).toBeVisible();
+  await expect(page.getByText('---').nth(2)).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Age --- Weight --- Resting HR' }).getByRole('img').nth(3)).toBeVisible();
+  await expect(page.getByText('Height')).toBeVisible();
+  await expect(page.getByText('---').nth(3)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Remove Client' })).toBeVisible();
+
+  //invitations
+  await page.getByRole('link', { name: 'Invitations' }).click();
+
+  await expect(page.getByPlaceholder('Search email address...')).toBeVisible();
+  await expect(page.getByText('Items per page:').first()).toBeVisible();
+  await expect(page.getByRole('combobox').nth(2)).toBeVisible();
+  await expect(page.locator('.page-item').first()).toBeVisible();
+  await expect(page.locator('.pagination > li:nth-child(2)').first()).toBeVisible();
+  await expect(page.getByLabel('Go to page').first()).toBeVisible();
+  await expect(page.locator('.pagination > li:nth-child(4)').first()).toBeVisible();
+  await expect(page.locator('li:nth-child(5)').first()).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Email (Click to clear sorting)' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Invited date (Click to sort' })).toBeVisible();
+  await expect(page.getByLabel('Actions')).toBeVisible();
+  await expect(page.getByRole('cell')).toBeVisible();
+  await expect(page.getByRole('alert')).toContainText('There are no pending invitations to clients.');
+  await page.getByRole('button', { name: 'Invite Clients' }).click();
+  await expect(page.getByRole('heading', { name: 'Invite clients to your club' })).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Hide Menu' })).toBeVisible();
+  await expect(page.getByText('Email Address')).toBeVisible();
+  await expect(page.getByRole('textbox').nth(1)).toBeVisible();
+  await expect(page.getByRole('button', { name: '+ Add another' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Send Invites' })).toBeVisible();
+});
+
+test('settings/integrations/timers and hr flows', async ({ page }) => {
+
+  await page.getByTestId('settingsButton').getByRole('combobox').click();
+  await expect(page.getByRole('option', { name: 'Timers and HR Flows' })).toBeVisible();
+  await expect(page.getByRole('option', { name: 'Integrations' })).toBeVisible();
+  await page.getByRole('option', { name: 'Integrations' }).click();
+  await expect(page.getByRole('heading', { name: 'Integrations' })).toBeVisible();
+  await expect(page.getByText('Calendar integration Easily')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Calendar integration' })).toBeVisible();
+  await expect(page.locator('#app')).toContainText('Easily sync your The Spott sessions with your favourite calendar app!');
+  await expect(page.locator('#app')).toContainText('Copy the ICS file below and follow these step-by-step guides:');
+  await expect(page.locator('#app')).toContainText('Mac Calendar See section "Import events from calendar file"');
+  await expect(page.locator('#app')).toContainText('Google Calendar See section "Use a link to add a public calendar"');
+  await expect(page.getByRole('link', { name: 'Google Calendar' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Mac Calendar' })).toBeVisible();
+  await expect(page.locator('#app')).toContainText('Note:Once integrated, your chosen calendar will be automatically updated with any changes on The Spott Calendar. All the sessions on the integrated calendar are read-only.');
+  await expect(page.locator('#app')).toContainText('Please note the sessions data on the integrated calendar may take some time to sync.');
+  await expect(page.locator('#app')).toContainText('ICS File');
+  await expect(page.getByText('Copy', { exact: true })).toBeVisible();
+  await expect(page.getByRole('textbox')).toHaveValue('http://localhost:8080/ics/8d1f2f4b-da38-491d-ba16-205db982affc-8266f55d-b115-44a5-8623-b0df6bb25dfa.ics');
+
+  await page.getByRole('link', { name: 'Timers and HR Flows' }).click();
+
+  await expect(page.getByRole('link', { name: 'Single Timers' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Timer & HR Flows' })).toBeVisible();
+
+
+  await expect(page.getByPlaceholder('Search Timer')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Create Single Timer' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Timer Name (Click to sort' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Rounds Number (Click to sort' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Total Time (mm:ss) (Click to' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Round Count Display (Click to' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Countdown Audio (Click to' })).toBeVisible();
+  await expect(page.getByLabel('Actions')).toBeVisible();
+  await expect(page.getByPlaceholder('Search Timer')).toBeEmpty();
+  await expect(page.getByRole('button', { name: 'Create Single Timer' })).toBeVisible();
+
+  await expect(page.getByRole('row', { name: 'Beeping Test 3 00:15 00:05 00' }).getByRole('button').first()).toBeVisible();
+  await expect(page.getByRole('row', { name: 'Beeping Test 3 00:15 00:05 00' }).locator('div').nth(1)).toBeVisible();
+  await expect(page.getByRole('row', { name: 'Beeping Test 3 00:15 00:05 00' }).getByRole('button').nth(1)).toBeVisible();
+  await page.getByRole('button', { name: 'Create Single Timer' }).click();
+  await expect(page.getByRole('heading', { name: 'Create Single Timer' })).toBeVisible();
+  await expect(page.locator('#timer-title').getByText('Timer Name')).toBeVisible();
+  await expect(page.getByText('# Rounds')).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Work Time (mm:ss)' })).toBeVisible();
+  await expect(page.getByText('Rest time (optional)')).toBeVisible();
+  await expect(page.getByText('Countdown (optional)')).toBeVisible();
+  await expect(page.locator('.ts-number-input-button').first()).toBeVisible();
+  await expect(page.getByRole('spinbutton')).toBeVisible();
+  await expect(page.locator('.ts-number-input-box > button:nth-child(3)')).toBeVisible();
+  await expect(page.locator('#timer-title').getByRole('textbox')).toBeVisible();
+  await expect(page.locator('#timer-title').getByRole('textbox')).toBeEmpty();
+  await expect(page.getByPlaceholder('mm:ss').first()).toBeEmpty();
+  await expect(page.getByPlaceholder('mm:ss').nth(1)).toBeEmpty();
+  await expect(page.getByPlaceholder('mm:ss').nth(2)).toBeEmpty();
+  await expect(page.locator('span').filter({ hasText: 'Round Count Display' })).toBeVisible();
+  await expect(page.locator('span').filter({ hasText: 'Countdown Audio' })).toBeVisible();
+  await expect(page.locator('.ts-slider').first()).toBeVisible();
+  await expect(page.locator('div:nth-child(7) > .ts-toggle-element-top > .ts-switch-container > .ts-switch > .ts-slider')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Hide Menu' })).toBeVisible();
+  await page.getByRole('img', { name: 'Hide Menu' }).click();
+
+  await page.getByRole('link', { name: 'Timer & HR Flows' }).click();
+  await expect(page.locator('.input-group')).toBeVisible();
+  await expect(page.getByPlaceholder('Search HR Flow')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Create Timer & HR Flow' })).toBeVisible();
+
+  await expect(page.getByLabel('Show Details')).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Timer & HR Flow Name (Click' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Round Count Display (Click to' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Countdown Audio (Click to' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Heart Rate Flow (Click to' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Flow Total (mm:ss) (Click to' })).toBeVisible();
+  await expect(page.getByLabel('Actions')).toBeVisible();
+  await expect(page.getByRole('row', { name: 'Bug verification hide off on' }).getByLabel('')).toBeVisible();
+  await expect(page.getByRole('row', { name: 'Bug verification hide off on' }).getByRole('button').first()).toBeVisible();
+  await expect(page.getByRole('row', { name: 'Bug verification hide off on' }).getByRole('button').nth(1)).toBeVisible();
+  await page.getByRole('button', { name: 'Create Timer & HR Flow' }).click();
+  await expect(page.getByRole('heading', { name: 'Create Timer & HR Flow' })).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Hide Menu' })).toBeVisible();
+  await expect(page.locator('#timer-title').getByText('Timer & HR Flow Name')).toBeVisible();
+  await expect(page.locator('#timer-title').getByRole('textbox')).toBeVisible();
+  await expect(page.locator('span').filter({ hasText: 'Round Count Display' })).toBeVisible();
+  await expect(page.locator('span').filter({ hasText: 'Countdown Audio' })).toBeVisible();
+  await expect(page.locator('.ts-slider').first()).toBeVisible();
+  await expect(page.locator('div:nth-child(3) > .ts-toggle-element-top > .ts-switch-container > .ts-switch > .ts-slider').first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Timer & HR Flow', exact: true })).toBeVisible();
+  await expect(page.getByText('Select at least two single')).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Enable HR Flow$/ }).first()).toBeVisible();
+  await expect(page.getByText('Enable HR Flow')).toBeVisible();
+  await expect(page.locator('div:nth-child(3) > .ts-toggle-element > .ts-toggle-element-top > .ts-switch-container > .ts-switch > .ts-slider')).toBeVisible();
+  await expect(page.getByText('Single Timer', { exact: true })).toBeVisible();
+  await expect(page.getByRole('combobox').nth(2)).toBeVisible();
+  await expect(page.getByText('1.')).toBeVisible();
+  await expect(page.locator('.fa > img').first()).toBeVisible();
+  await expect(page.locator('div:nth-child(2) > .timer-item-left > .fa > img')).toBeVisible();
+  await expect(page.getByText('2.')).toBeVisible();
+  await expect(page.getByRole('combobox').nth(3)).toBeVisible();
+  await expect(page.getByRole('button', { name: '+ Add Single Timer' })).toBeVisible();
+  await expect(page.getByText('Timer & HR Flow Total (mm:ss)')).toBeVisible();
+  await expect(page.locator('.flow-sum-amount')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
+  await page.getByRole('button', { name: 'Cancel' }).dblclick();
+});
+
+test('account', async ({ page }) => {
+
+  await page.getByTestId('userMenuButton').click();
+  await page.getByTestId('trainerAccountMenuItem').click();
+  await expect(page.getByRole('heading', { name: 'Account', exact: true })).toBeVisible();
+  await expect(page.locator('.account-title-break')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Manage Account' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Manage Account' })).toBeVisible();
+  await expect(page.getByText('First Name')).toBeVisible();
+  await expect(page.getByText('Last Name')).toBeVisible();
+  await expect(page.getByRole('textbox').first()).toBeVisible();
+  await expect(page.getByRole('textbox').first()).toHaveValue('Spott');
+  await expect(page.getByRole('textbox').nth(1)).toBeVisible();
+  await expect(page.getByRole('textbox').nth(1)).toHaveValue('Trainer');
+  await expect(page.getByText('Trainer Photo')).toBeVisible();
+  await expect(page.locator('.avatar-wrapper')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Delete', exact: true })).toBeVisible();
+
+  await expect(page.locator('label').filter({ hasText: 'Update Photo' })).toBeVisible();
+
+  await page.getByRole('textbox').first().click();
+  await page.getByRole('textbox').first().fill('Spotta');
+  await expect(page.getByRole('button', { name: 'Discard Changes' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Save Changes' })).toBeVisible();
+  await page.getByRole('button', { name: 'Discard Changes' }).click();
+  await expect(page.getByRole('button', { name: 'Delete Account' })).toBeVisible();
+
+
+  await page.getByRole('link', { name: 'Club Settings' }).click();
+  await expect(page.getByRole('heading', { name: 'Club Settings' })).toBeVisible();
+
+  await expect(page.getByText('Display name')).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Display name' }).getByRole('img')).toBeVisible();
+  await expect(page.getByRole('textbox').first()).toBeVisible();
+  await expect(page.getByRole('textbox').first()).toHaveValue('Test Club');
+  await expect(page.getByText('Registered name')).toBeVisible();
+  await expect(page.locator('label').filter({ hasText: 'Registered name' }).getByRole('img')).toBeVisible();
+  await expect(page.getByRole('textbox').nth(1)).toBeVisible();
+  await expect(page.getByRole('textbox').nth(1)).toHaveValue('Test Club');
+  await expect(page.getByText('Vat Number (optional)')).toBeVisible();
+  await expect(page.getByRole('textbox').nth(2)).toBeVisible();
+  await expect(page.getByRole('textbox').nth(2)).toBeEmpty();
+  await expect(page.getByText('Club Logo')).toBeVisible();
+  await expect(page.locator('.avatar-wrapper')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Delete' })).toBeVisible();
+  await page.waitForTimeout(5000);
+  await expect(page.locator('label').filter({ hasText: 'Update Photo' })).toBeVisible();
+  await page.getByRole('textbox').first().fill('Test Clubaaaaa');
+  await page.getByRole('textbox').first().blur();
+  await expect(page.getByRole('textbox').first()).toHaveValue('Test Clubaaaaa');
+  await page.getByRole('button', { name: 'Discard Changes' }).click();
+  await expect(page.getByRole('button', { name: 'Discard Changes' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Save Changes' })).toBeVisible();
+  await page.getByRole('link', { name: 'Subscription' }).click();
+  await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
+  await expect(page.getByText('Current Plan: ultimate yearly')).toBeVisible();
+  await expect(page.getByText('yearly')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Switch Plan' })).toBeVisible();
+  await expect(page.getByText('Next payment: 08-Apr-')).toBeVisible();
+  await expect(page.getByText('Amount of the upcoming')).toBeVisible();
+  await expect(page.locator('span').filter({ hasText: '£2,400.00' })).toBeVisible();
+  await expect(page.getByText('Incl. VAT (20%)')).toBeVisible();
+  await expect(page.getByText('£400.00')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Invoices' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Period start' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Period end' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Total' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'Payment status' })).not.toBeVisible();
+  await expect(page.getByLabel('Details')).toBeVisible();
+  await expect(page.getByRole('row', { name: '07-Feb-25 07-Mar-25 £150.00' }).getByRole('button')).toBeVisible();
+});

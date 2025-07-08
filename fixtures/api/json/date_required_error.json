@@ -1,0 +1,10 @@
+{
+    "error": {
+        "startDate": [
+            "The startDate field is required."
+        ],
+        "endDate": [
+            "The endDate field is required."
+        ]
+    }
+}

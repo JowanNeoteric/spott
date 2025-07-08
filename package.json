@@ -1,0 +1,26 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "playwright": "playwright",
+    "api": "playwright test tests/api/ --workers=4",
+    "e2e-auth": "playwright test tests/e2e/auth/ --workers=4",
+    "e2e-no-auth": "playwright test tests/e2e/no-auth/ --workers=2",
+    "setup": "playwright test tests/setup/ --workers=1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "@types/node": "^20.14.10"
+  },
+  "dependencies": {
+    "amazon-cognito-identity-js": "^6.3.12",
+    "aws-sdk": "^2.1691.0",
+    "dayjs": "^1.11.12",
+    "playwright": "^1.47.2"
+  }
+}

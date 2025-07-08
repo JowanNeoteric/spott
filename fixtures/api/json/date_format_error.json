@@ -1,0 +1,10 @@
+{
+    "error": {
+        "startDate": [
+            "The startDate is not a valid date format."
+        ],
+        "endDate": [
+            "The endDate is not a valid date format."
+        ]
+    }
+}

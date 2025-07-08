@@ -1,0 +1,8 @@
+{
+    "error": {
+        "id": [
+            "The id must be an integer.",
+            "The id must be at least 1."
+        ]
+    }
+}

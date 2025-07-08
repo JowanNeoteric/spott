@@ -1,0 +1,9 @@
+{
+    "messages": [
+        {
+            "type": "success",
+            "content": "message.session-cancelled-successfully"
+        }
+    ],
+    "data": null
+}

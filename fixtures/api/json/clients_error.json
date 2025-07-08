@@ -1,0 +1,12 @@
+{
+    "error": {
+        "page": [
+            "The page must be an integer.",
+            "The page must be at least 0."
+        ],
+        "perPage": [
+            "The perPage must be an integer.",
+            "The perPage must be at least 1."
+        ]
+    }
+}

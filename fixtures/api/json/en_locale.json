@@ -1,0 +1,127 @@
+{
+    "common": {
+        "create": "Submit",
+        "close": "Close",
+        "open": "Open",
+        "sent": "Sent",
+        "search": "Search",
+        "goto": "Go to",
+        "upload": "Upload",
+        "delete": "Delete",
+        "header": {
+            "back": "Back",
+            "poweredby": "by ",
+            "freshworks": "Freshworks"
+        },
+        "fileAttachment": {
+            "title": "{{count}} attachment",
+            "title_plural": "{{count}} attachments",
+            "uploadlabel": "Upload files (max 5)",
+            "draganddroplabel": "Click to add or drag & drop files.",
+            "extraFiles": "You cannot upload more than 5 files.",
+            "extraSize": "The total size of all attachments cannot exceed 20MB.",
+            "failed": "Some attachments failed to upload.",
+            "uploadProgress": "Some attachments are still being uploaded.",
+            "filesBlocked": "Your attachment(s) type is/are not supported."
+        },
+        "screenshot": {
+            "buttonText": "Take screenshot",
+            "loadingText": "Generating screenshot…",
+            "helpText": "This might take a while",
+            "uploadingText": "Uploading screenshot…"
+        },
+        "errors": {
+            "invalid_value": "Some fields have invalid values. Please refresh the page and try again.",
+            "datatype_mismatch": "Oops! The value is invalid.",
+            "invalid_field": "Some fields are missing. Please refresh the page and try again.",
+            "missing_field": "Some required fields are missing. Please fill them to proceed.",
+            "invalid_value.flashmessage": "The {{fieldName}} field has been updated. Please refresh the page and try again.",
+            "inaccessible_field": "We're unable to set the value. You are not authorized to do this action.",
+            "unable_to_perform": "Oops! Something went wrong while trying to perform this action.",
+            "access_denied": "You are not authorized to perform this action.",
+            "invalid_format": "Some fields seem to be sending data in an incorrect format.",
+            "invalid_requester": "You're not authorized to submit tickets. Please reach out to the business by other means.",
+            "invalid_help_widget": "This contact option doesn't exist anymore. Please reach out to the business by other means.",
+            "access_restricted": "The CAPTCHA wasn't filled. Please refresh the page and try again.",
+            "ticket_creation_not_allowed": "The widget doesn't have contact options enabled.",
+            "invalid_size": "Total attachment(s) size should not exceed 20 MB.",
+            "something_wrong": "Something went wrong!",
+            "ip_blocked": "Sorry, your IP is blocked."
+        },
+        "errorDescription": {
+            "ip_blocked": "You can’t view help content or raise tickets.",
+            "unable_to_perform": "Please try again in a while."
+        },
+        "contactus": "Contact us"
+    },
+    "solution": {
+        "title": "Got questions?",
+        "notfound": "Didn't find an answer?",
+        "relevantarticles": "Suggested articles",
+        "search": {
+            "placeholder": "Search for help",
+            "resultscount": "{{count}} answer found",
+            "resultscount_plural": "{{count}} articles found",
+            "loading": "Getting answers...",
+            "notfoundtitle": "Nothing found.",
+            "notfoundinfo": "Please try with a different keyword."
+        },
+        "article": {
+            "helpful": "Helpful",
+            "morehelp": "Not helpful",
+            "successfeedback": "Thank you for the feedback."
+        }
+    },
+    "thankyou": {
+        "message": "Close"
+    },
+    "frustrationTracking": {
+        "triggerText": "Enter your message here",
+        "defaultSubject": "Need help!",
+        "defaultHeader": "Can we help?",
+        "defaultMessage": "We noticed you’re stuck. Tell us what you were trying to accomplish, and our support team will reach out to you as soon as possible.",
+        "defaultSuccessMessage": "Thanks. We'll be in touch!"
+    },
+    "ticketForm": {
+        "nameLabel": "Your name",
+        "emailLabel": "Your email address",
+        "subjectLabel": "Subject",
+        "descriptionLabel": "Description"
+    },
+    "validationErrors": {
+        "empty": "Please fill this field",
+        "validEmail": "Please enter a valid email address",
+        "validNumber": "Please enter a valid number",
+        "validDecimal": "Only 2 digits after the decimal are allowed",
+        "date": {
+            "empty": "Please enter a date",
+            "format": "Please enter the date in this format: YYYY-MM-DD",
+            "validMonth": "Please enter a valid month",
+            "validDay": "Please enter a valid day",
+            "validDate": "Please enter a valid date"
+        }
+    },
+    "months": {
+        "jan": "January",
+        "feb": "February",
+        "mar": "March",
+        "apr": "April",
+        "may": "May",
+        "jun": "June",
+        "july": "July",
+        "aug": "August",
+        "sep": "September",
+        "oct": "October",
+        "nov": "November",
+        "dec": "December"
+    },
+    "weekdaysShort": {
+        "sun": "Su",
+        "mon": "Mo",
+        "tue": "Tu",
+        "wed": "We",
+        "thu": "Th",
+        "fri": "Fr",
+        "sat": "Sa"
+    }
+}

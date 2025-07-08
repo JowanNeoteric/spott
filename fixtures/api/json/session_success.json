@@ -1,0 +1,9 @@
+{
+    "messages": [
+        {
+            "type": "success",
+            "content": "message.session-created-successfully"
+        }
+    ],
+    "data": null
+}
