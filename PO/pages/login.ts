@@ -42,9 +42,10 @@ export class loginPage {
   readonly sendCode: Locator;
   readonly invalidEmail: Locator;
 
-  readonly generic = new Generic(this.page);
+  readonly generic: Generic;
 
   constructor(private page: Page) {
+    this.generic = new Generic(this.page);
     this.loginInput = page.getByTestId(common.input.email).locator(common.selector.generic.input);
     this.passwordInput = page.getByTestId(common.input.password).locator(common.selector.generic.input);
     this.trainerLogin = credentials.trainer.validlogin

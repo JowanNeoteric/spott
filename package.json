@@ -6,7 +6,7 @@
     "playwright": "playwright",
     "api": "playwright test tests/api/ --workers=4",
     "e2e-auth": "playwright test tests/e2e/auth/ --workers=4",
-    "e2e-no-auth": "playwright test tests/e2e/no-auth/ --workers=2",
+    "e2e-no-auth": "playwright test tests/e2e/no-auth/ --workers=4",
     "setup": "playwright test tests/setup/ --workers=1"
   },
   "keywords": [],

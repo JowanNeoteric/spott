@@ -18,12 +18,15 @@ export class landingPage {
   readonly sessionTitle: string;
   readonly calendarSpinner: Locator;
   readonly sessionSingleParticipantJoined: Locator;
-  readonly showMoreButton: Locator; 
+  readonly showMoreButton: Locator;
+  readonly joinSessionButton: Locator;
+  readonly sessionDetailsPopup: Locator;
 
-  readonly generic = new Generic(this.page);
+  readonly generic: Generic;
 
   constructor(private page: Page) {
-    this.showMoreButton = page.getByText(/^\+\d\smore$/, { exact: true }).last();
+    this.generic = new Generic(this.page);
+    this.showMoreButton = page.getByText(/^\+[0-9]+\s[A-Za-z]+$/, { exact: true }).last();
     this.userMenuToggle = page.getByTestId(common.selector.landingPage.userMenuToggle);
     this.userMenuList = page.getByTestId(common.selector.landingPage.userMenuList);
     this.signOutButton = page.getByTestId(common.selector.landingPage.userMenuLogout);
@@ -37,6 +40,8 @@ export class landingPage {
     this.sessionActivityTypeDetails = page.getByTestId('sessionDetailsPopup').locator(common.selector.landingPage.popup.sessionSingleData).nth(4);
     this.sessionTypeDetails = page.getByTestId('sessionDetailsPopup').locator(common.selector.landingPage.popup.sessionSingleData).first();
     this.calendarSpinner = page.locator(common.selector.generic.calendarSpinner);
+    this.joinSessionButton = page.getByTestId(common.selector.landingPage.joinSessionButton);
+    this.sessionDetailsPopup = page.getByTestId('sessionDetailsPopup');
   }
 
   async verifyConfirmationPopup(text: string) {
@@ -57,6 +62,7 @@ export class landingPage {
   }
 
   async removeSession() {
+    await this.generic.isVisible(this.sessionDetailsPopup);
     await this.generic.clickElement(this.deleteSessionButton);
     await this.generic.clickElement(this.confirmPopupButton);
   }
@@ -64,15 +70,19 @@ export class landingPage {
   async findSessionInCalendar(generatedTitle: string) {
     this.pwTestSessionEntity = this.page.getByText(generatedTitle, { exact: true }).last();
     if (await this.pwTestSessionEntity.isVisible()) {
-      await this.generic.clickElement(this.pwTestSessionEntity);
+      await this.pwTestSessionEntity.click();
+      await this.generic.isVisible(this.sessionDetailsPopup);
       return;
     }
     if (await this.showMoreButton.isVisible()) {
       const sessionInList = this.page.locator('.fc-events-list-container').getByText(generatedTitle, { exact: true }).last();
+      const sessionList = this.page.locator('.fc-events-list-container');
 
       await this.generic.clickElement(this.showMoreButton);
+      await this.generic.isVisible(sessionList);
       await this.generic.isVisible(sessionInList);
       await this.generic.clickElement(sessionInList);
+      await this.generic.isVisible(this.sessionDetailsPopup);
     }
   }
 

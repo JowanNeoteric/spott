@@ -23,8 +23,16 @@ export class Generic {
     await element.click();
   }
 
+  async hooverElement(element: Locator) {
+    await element.hover();
+  }
+
   async verifyText(element: Locator, text: string | RegExp) {
     await expect(element).toHaveText(text);
+  }
+
+  async containsText(element: Locator, text: string | RegExp) {
+    await expect(element).toContainText(text);
   }
 
   async compareText(source: string | RegExp, compared: string | RegExp) {
@@ -101,7 +109,7 @@ export class Generic {
     await expect(this.page).toHaveTitle(common.text.pageTitle);
   }
 
-  async verifyUrl(url: string) {
+  async verifyUrl(url: string | RegExp) {
     await expect(this.page).toHaveURL(url)
   }
 
@@ -109,5 +117,9 @@ export class Generic {
     for (let i = 0; i < source.length; i++) {
       await this.verifyText(element.nth(i), source[i]);
     }
+  }
+
+  async haveElementsCount(element: Locator, count: number) {
+    await expect(element).toHaveCount(count);
   }
 }

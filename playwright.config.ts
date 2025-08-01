@@ -49,13 +49,23 @@ export default defineConfig({
     {
       name: 'Chrome - auth',
       testDir: "./tests/e2e/auth/",
+
       use: {
+        permissions: ['camera', 'microphone'],
         headless: true,
         // trace: 'on',
-        screenshot: 'only-on-failure',
-        video: 'retain-on-failure',
+        screenshot: 'on',
+        bypassCSP: true,
+        video: 'on',
         ...{ ...devices['Desktop Chrome'], viewport: { width: 1280, height: 832 } },
         storageState: 'e2e/.auth/user.json',
+        launchOptions: {
+          args: [
+            '--use-fake-ui-for-media-stream',
+            '--use-fake-device-for-media-stream'
+          ],
+        }
+
       },
     },
     {

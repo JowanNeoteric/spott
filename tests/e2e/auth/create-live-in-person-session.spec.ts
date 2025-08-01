@@ -54,7 +54,7 @@ test.describe('Create and Remove Session', () => {
       await method.isNotVisible(landing.calendarSpinner.first());
       const generatedTitle = await createSession.generateSessionTitle(common.text.title.inPerson);
       await createSession.fillSessionTitle(createSession.sessionTitleInput, generatedTitle);
-      const participants = await createSession.selectSessionClients(20);
+      const participants = await createSession.selectSessionClients(19);
       await createSession.selectFutureDay();
       await createSession.setFutureStartTime();
       await method.isNotDisabled(createSession.createSessionWindowButton);

@@ -55,13 +55,15 @@ export class createSessionPage {
   readonly combobox: Locator;
   readonly startTimeDropdownList: Locator;
 
-  readonly generic = new Generic(this.page);
-  readonly landing = new landingPage(this.page);
+  generic: Generic;
+  landing: landingPage;
 
   readonly now = dayjs();
   readonly datepickerActualDate = dayjs().format('ddd, DD-MMM-YY').toString();
 
   constructor(private page: Page) {
+    this.generic = new Generic(this.page);
+    this.landing = new landingPage(this.page);
     this.startTimeDropdownList = page.locator("#time-dropdown-time-start");
     this.combobox = page.getByRole("combobox");
     this.textBox = page.getByRole("textbox");
@@ -120,6 +122,15 @@ export class createSessionPage {
     return time.set('minutes', roundedMinute);
   };
 
+  async selectDuration(minutes: number) {
+  const dropdownButton = this.page.locator('[data-testid="durationPicker"] .ts-dropdown-menu-button');
+  const optionLocator = this.page.locator(`#duration-select .ts-select-option[id="${minutes}"]`);
+
+  await dropdownButton.click();
+  await optionLocator.waitFor({ state: 'visible' });
+  await optionLocator.click();
+}
+
   async openSessionModal() {
     await this.generic.clickElement(this.landing.createSessionMainButton);
   }
@@ -151,12 +162,14 @@ export class createSessionPage {
   async selectFutureDay() {
     await this.generic.clickElement(this.datepicker);
     await this.generic.clickElement(this.selectedDay);
+    return this.selectedDay.innerText();
   }
 
   async setFutureStartTime() {
     await this.generic.clickElement(this.startTime);
     await this.generic.isVisible(this.startTimeDropdown);
     await this.generic.clickElement(this.startTimeSet);
+    return await this.startTimeSet.innerText();
   }
 
   generateSessionTitle(title: string) {
