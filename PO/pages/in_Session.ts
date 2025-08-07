@@ -1,6 +1,6 @@
 import { Page, Locator } from 'playwright';
 
-export class InSessionPage {
+export class inSessionPage {
     readonly page: Page;
     readonly timerComponent: Locator;
     readonly timerCircleIcon: Locator;
@@ -35,7 +35,7 @@ export class InSessionPage {
         this.floatingTimersList = page.locator('.floating-timers-list');
         this.closeFloatingListButton = page.locator('.ft-close-btn');
         this.floatingTimerItems = page.locator('.ft-list__item.selectable');
-        this.participantName = page.locator('.video-participant-name span');
+        this.participantName = page.locator('.video-participant-name');
         this.videoElement = page.locator('.video-trainer');
         this.audioElement = page.locator('.video-participant audio');
         this.audioIcon = page.locator('.video-participant .fa-microphone');

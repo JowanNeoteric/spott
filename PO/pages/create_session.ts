@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test"
 import { common } from "../../fixtures/common";
-import { Generic } from "../methods/generic"
+import { generic } from "../methods/generic"
 import dayjs from 'dayjs';
 import { landingPage } from "./landing";
 
@@ -55,14 +55,14 @@ export class createSessionPage {
   readonly combobox: Locator;
   readonly startTimeDropdownList: Locator;
 
-  generic: Generic;
+  generic: generic;
   landing: landingPage;
 
   readonly now = dayjs();
   readonly datepickerActualDate = dayjs().format('ddd, DD-MMM-YY').toString();
 
   constructor(private page: Page) {
-    this.generic = new Generic(this.page);
+    this.generic = new generic(this.page);
     this.landing = new landingPage(this.page);
     this.startTimeDropdownList = page.locator("#time-dropdown-time-start");
     this.combobox = page.getByRole("combobox");
@@ -112,30 +112,30 @@ export class createSessionPage {
     this.singleTimeZone = page.getByTestId(common.selector.landingPage.createSessionModal.singleTimeZone);
   }
 
-  async waitForClientsList() {
+  async waitForClientsList(): Promise<void> {
     const responsePromise = this.page.waitForResponse('**/api/clients');
     await responsePromise;
   }
 
-  roundToNearest5Minutes(time) {
+  roundToNearest5Minutes(time: dayjs.Dayjs) {
     const roundedMinute = (time.minute() - time.minute() % 5);
     return time.set('minutes', roundedMinute);
   };
 
   async selectDuration(minutes: number) {
-  const dropdownButton = this.page.locator('[data-testid="durationPicker"] .ts-dropdown-menu-button');
-  const optionLocator = this.page.locator(`#duration-select .ts-select-option[id="${minutes}"]`);
+    const dropdownButton = this.page.locator('[data-testid="durationPicker"] .ts-dropdown-menu-button');
+    const optionLocator = this.page.locator(`#duration-select .ts-select-option[id="${minutes}"]`);
 
-  await dropdownButton.click();
-  await optionLocator.waitFor({ state: 'visible' });
-  await optionLocator.click();
-}
+    await dropdownButton.click();
+    await optionLocator.waitFor({ state: 'visible' });
+    await optionLocator.click();
+  }
 
   async openSessionModal() {
     await this.generic.clickElement(this.landing.createSessionMainButton);
   }
 
-  async selectSessionType(sessionType) {
+  async selectSessionType(sessionType: Locator) {
     await this.generic.clickElement(sessionType);
   }
 
@@ -144,7 +144,7 @@ export class createSessionPage {
     await this.generic.typeAndVerifyInput(element, title);
   }
 
-  async selectSessionClients(clients: number) {
+  async selectSessionClients(clients: number): Promise<number> {
     await this.generic.clickElement(this.sessionClientsInput);
     for (let i = 0; i < clients; i++) {
       await this.generic.clickElement(this.singleClient);
@@ -153,26 +153,26 @@ export class createSessionPage {
     return clients
   }
 
-  async getSelectedClient() {
+  async getSelectedClient(): Promise<string> {
     const singleClient = this.sessionClients.locator(common.selector.landingPage.createSessionModal.singlePill);
     const selectedClient = await singleClient.innerText();
     return selectedClient
   }
 
-  async selectFutureDay() {
+  async selectFutureDay(): Promise<string> {
     await this.generic.clickElement(this.datepicker);
     await this.generic.clickElement(this.selectedDay);
     return this.selectedDay.innerText();
   }
 
-  async setFutureStartTime() {
+  async setFutureStartTime(): Promise<string> {
     await this.generic.clickElement(this.startTime);
     await this.generic.isVisible(this.startTimeDropdown);
     await this.generic.clickElement(this.startTimeSet);
     return await this.startTimeSet.innerText();
   }
 
-  generateSessionTitle(title: string) {
+  async generateSessionTitle(title: string): Promise<string> {
     title = title + this.generic.rndInt
     return title;
   };

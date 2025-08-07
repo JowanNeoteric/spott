@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test"
 import { common } from "../../fixtures/common";
 import { credentials } from "../../fixtures/credentials";
-import { Generic } from "../methods/generic"
+import { generic } from "../methods/generic"
 
 export class loginPage {
   readonly loginInput: Locator;
@@ -41,11 +41,10 @@ export class loginPage {
   readonly getHelpIcon: Locator;
   readonly sendCode: Locator;
   readonly invalidEmail: Locator;
-
-  readonly generic: Generic;
+  readonly generic: generic;
 
   constructor(private page: Page) {
-    this.generic = new Generic(this.page);
+    this.generic = new generic(this.page);
     this.loginInput = page.getByTestId(common.input.email).locator(common.selector.generic.input);
     this.passwordInput = page.getByTestId(common.input.password).locator(common.selector.generic.input);
     this.trainerLogin = credentials.trainer.validlogin

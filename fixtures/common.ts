@@ -9,9 +9,9 @@ export const common = {
 		loading: /loading/,
 		microphone: /fa-microphone/,
 		toggled: /toggled/,
-		visible: /show/,
 		videoDisabled: /video-disabled/,
 		videoEnabled: /video-enabled/,
+		visible: /show/,
 	},
 	href: {
 		forgot: '/forgot-password',
@@ -34,8 +34,10 @@ export const common = {
 		attribute: {
 			name: {
 				href: 'href',
+				source: 'src',
 			},
 			value: {
+				off: /.*off.*/,
 			}
 		},
 		button: {
@@ -57,6 +59,7 @@ export const common = {
 			arrow: '.arrow',
 			autocompleteInput: 'autocompleteInput',
 			button: 'button',
+			calendarSpinner: '.spinner-border',
 			checkbox: 'checkboxComponent',
 			datepicker: 'sessionDatepicker',
 			divider: 'orDivider',
@@ -73,13 +76,14 @@ export const common = {
 			subHeader: '.large-paragraph',
 			tagifyInput: '.tagify__input',
 			validation: 'validationError',
-			calendarSpinner: '.spinner-border',
 		},
 		landingPage: {
 			calendarSession: '.fc-event-title',
 			confirmationPopup: '.custom-swal-title',
 			createSessionModalButton: "createSessionModalButton",
 			joinSessionButton: 'joinSessionButton',
+			sessionDetailsPopup: 'sessionDetailsPopup',
+			sessionList: '.fc-events-list-container',
 			lobby: {
 				current: {
 				},

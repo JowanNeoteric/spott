@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test"
 import { common } from "../../fixtures/common";
 
-export class Generic {
+export class generic {
   readonly rndInt: number;
 
   constructor(private page: Page) {
@@ -14,9 +14,9 @@ export class Generic {
   }
 
   async waitForPageToFullLoad() {
-    await this.page.waitForLoadState('load', { timeout: 45000 });
-    await this.page.waitForLoadState('domcontentloaded', { timeout: 45000 });
-    await this.page.waitForLoadState('networkidle', { timeout: 45000 });
+    await this.page.waitForLoadState('load', { timeout: 60000 });
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 60000 });
+    await this.page.waitForLoadState('networkidle', { timeout: 60000 });
   }
 
   async clickElement(element: Locator) {

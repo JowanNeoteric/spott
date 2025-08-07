@@ -1,21 +1,25 @@
 import { test, Locator } from '@playwright/test';
-import { LobbyRoom } from '../../../PO/pages/LobbyRoom.ts.ts';
+import { lobbyRoom } from '../../../PO/pages/lobby_Room';
 import { common } from "../../../fixtures/common";
-import { Generic } from '../../../PO/methods/generic';
+import { generic } from '../../../PO/methods/generic';
 import { landingPage } from '../../../PO/pages/landing';
-import { createSessionPage } from '../../../PO/pages/create_session';
+import { createSessionPage } from '../../../PO/pages/create_Session';
 
 test.describe('Lobby Room Page', () => {
-    let method: Generic;
+    let method: generic;
     let landing: landingPage;
     let createSession: createSessionPage;
-    let lobby: LobbyRoom;
+    let lobby: lobbyRoom;
+    let generatedTitle: string;
+    let selectedClient: string;
+    let deviceIcons: Locator[];
 
     test.beforeEach(async ({ page }) => {
-        method = new Generic(page);
+        method = new generic(page);
         landing = new landingPage(page);
         createSession = new createSessionPage(page);
-        lobby = new LobbyRoom(page);
+        lobby = new lobbyRoom(page);
+        deviceIcons = [lobby.micIcon, lobby.videoIcon, lobby.stopwatchIcon];
 
         await method.visitPage(common.url.e2e.landing);
         await method.waitForPageToFullLoad();
@@ -23,8 +27,6 @@ test.describe('Lobby Room Page', () => {
     });
 
     test('Live Remote Lobby Room - current session', async () => {
-        let generatedTitle: string;
-        let selectedClient: string;
         let componentsList: Locator[] = [
             lobby.title,
             lobby.subtitle,
@@ -42,7 +44,7 @@ test.describe('Lobby Room Page', () => {
             lobby.joinButton,
             lobby.videoPlaceholder
         ];
-        let deviceIcons = [lobby.micIcon, lobby.videoIcon, lobby.stopwatchIcon];
+
 
         await test.step('Create a new remote session', async () => {
             await method.isNotVisible(landing.calendarSpinner);
@@ -82,14 +84,14 @@ test.describe('Lobby Room Page', () => {
 
         await test.step('Verify lobby components functionality - toggle on by default', async () => {
             for (let icon of deviceIcons) {
-                await method.haveAttribute(icon, 'src', new RegExp('^(?!.*off).*'));
+                await method.nothaveAttribute(icon, common.selector.attribute.name.source, common.selector.attribute.value.off);
             }
         });
 
         await test.step('Verify lobby components functionality - toggle off', async () => {
             for (let icon of deviceIcons) {
                 await lobby.toggleDevice(icon);
-                await method.haveAttribute(icon, 'src', /.*off.*/);
+                await method.haveAttribute(icon, common.selector.attribute.name.source, common.selector.attribute.value.off);
                 await lobby.toggleDevice(icon); // Toggle back on
             }
         });
@@ -97,8 +99,6 @@ test.describe('Lobby Room Page', () => {
 
     test('Live Remote Lobby Room - future session', async () => {
         let time: { days: number; hours: number; minutes: number; seconds: number };
-        let generatedTitle: string;
-        let selectedClient: string;
         let startTime: string;
         let selectedDay: string;
         let componentsList: Locator[] = [
@@ -123,7 +123,6 @@ test.describe('Lobby Room Page', () => {
             lobby.secondsCircle,
             lobby.videoPlaceholder
         ];
-        let deviceIcons = [lobby.micIcon, lobby.videoIcon, lobby.stopwatchIcon];
 
         await test.step('Create a new remote session', async () => {
             await method.isNotVisible(landing.calendarSpinner);
@@ -175,14 +174,14 @@ test.describe('Lobby Room Page', () => {
 
         await test.step('Verify lobby components functionality - toggle on by default', async () => {
             for (let icon of deviceIcons) {
-                await method.haveAttribute(icon, 'src', new RegExp('^(?!.*off).*'));
+                await method.nothaveAttribute(icon, common.selector.attribute.name.source, common.selector.attribute.value.off);
             }
         });
 
         await test.step('Verify lobby components functionality - toggle off', async () => {
             for (let icon of deviceIcons) {
                 await lobby.toggleDevice(icon);
-                await method.haveAttribute(icon, 'src', /.*off.*/);
+                await method.haveAttribute(icon, common.selector.attribute.name.source, common.selector.attribute.value.off);
                 await lobby.toggleDevice(icon); // Toggle back on
             }
         });

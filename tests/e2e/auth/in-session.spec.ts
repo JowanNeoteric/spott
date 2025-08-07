@@ -1,24 +1,24 @@
 import { test } from '@playwright/test';
-import { LobbyRoom } from '../../../PO/pages/LobbyRoom.ts.ts';
-import { common } from "../../../fixtures/common.ts";
-import { Generic } from '../../../PO/methods/generic.ts';
-import { landingPage } from '../../../PO/pages/landing.ts';
-import { createSessionPage } from '../../../PO/pages/create_session.ts';
-import { InSessionPage } from '../../../PO/pages/InSession.ts';
+import { lobbyRoom } from '../../../PO/pages/lobby_Room';
+import { common } from "../../../fixtures/common";
+import { generic } from '../../../PO/methods/generic';
+import { landingPage } from '../../../PO/pages/landing';
+import { createSessionPage } from '../../../PO/pages/create_Session';
+import { inSessionPage } from '../../../PO/pages/in_Session';
 
 test.describe('Validates In Session', () => {
-    let method: Generic;
+    let method: generic;
     let landing: landingPage;
     let createSession: createSessionPage;
-    let lobby: LobbyRoom;
-    let inSession: InSessionPage;
+    let lobby: lobbyRoom;
+    let inSession: inSessionPage;
 
     test.beforeEach(async ({ page }) => {
-        method = new Generic(page);
+        method = new generic(page);
         landing = new landingPage(page);
         createSession = new createSessionPage(page);
-        lobby = new LobbyRoom(page);
-        inSession = new InSessionPage(page);
+        lobby = new lobbyRoom(page);
+        inSession = new inSessionPage(page);
 
         await method.visitPage(common.url.e2e.landing);
         await method.waitForPageToFullLoad();

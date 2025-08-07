@@ -1,16 +1,16 @@
 import { test } from '@playwright/test';
 import { common } from "../../../fixtures/common";
-import { Generic } from '../../../PO/methods/generic';
+import { generic } from '../../../PO/methods/generic';
 import { landingPage } from '../../../PO/pages/landing';
-import { createSessionPage } from '../../../PO/pages/create_session';
+import { createSessionPage } from '../../../PO/pages/create_Session';
 
 test.describe('Create and Remove Session', () => {
-  let method: Generic;
+  let method: generic;
   let landing: landingPage;
   let createSession: createSessionPage;
 
   test.beforeEach(async ({ page }) => {
-    method = new Generic(page);
+    method = new generic(page);
     landing = new landingPage(page);
     createSession = new createSessionPage(page);
 

@@ -1,8 +1,8 @@
 import { test } from '@playwright/test';
 import { common } from "../../../fixtures/common";
-import { Generic } from '../../../PO/methods/generic';
+import { generic } from '../../../PO/methods/generic';
 import { landingPage } from '../../../PO/pages/landing';
-import { createSessionPage } from '../../../PO/pages/create_session';
+import { createSessionPage } from '../../../PO/pages/create_Session';
 
 const activities = JSON.parse(JSON.stringify(require("../../../fixtures/e2e/activities.json")));
 const duration = JSON.parse(JSON.stringify(require("../../../fixtures/e2e/duration.json")));
@@ -10,12 +10,12 @@ const startTime = JSON.parse(JSON.stringify(require("../../../fixtures/e2e/start
 const timezones = JSON.parse(JSON.stringify(require("../../../fixtures/e2e/timeZone.json")));
 
 test.describe('Create Session modal', () => {
-  let method: Generic;
+  let method: generic;
   let landing: landingPage;
   let createSession: createSessionPage;
 
   test.beforeEach(async ({ page }) => {
-    method = new Generic(page);
+    method = new generic(page);
     landing = new landingPage(page);
     createSession = new createSessionPage(page);
 
@@ -24,6 +24,7 @@ test.describe('Create Session modal', () => {
     await method.isVisible(landing.createSessionMainButton);
     await createSession.openSessionModal();
     await method.waitForPageToFullLoad();
+    await page.route('**', route => route.continue());
   });
 
   test("Component verification", async () => {

@@ -1,9 +1,9 @@
 import { Page } from 'playwright';
 import { expect, Locator } from '@playwright/test';
 import { common } from "../../fixtures/common";
-import { Generic } from "../methods/generic"
+import { generic } from "../methods/generic"
 
-export class LobbyRoom {
+export class lobbyRoom {
   readonly activityDropdown: Locator;
   readonly activityOptions: Locator;
   readonly backButton: Locator;
@@ -12,7 +12,7 @@ export class LobbyRoom {
   readonly countdownDisclaimer: Locator;
   readonly countdownTitle: Locator;
   readonly daysCircle: Locator;
-  readonly generic: Generic;
+  readonly generic: generic;
   readonly hoursCircle: Locator;
   readonly hrFlowDropdown: Locator;
   readonly hrFlowOptions: Locator;
@@ -61,7 +61,7 @@ export class LobbyRoom {
     this.videoPlaceholder = page.locator('.camera-preview');
     this.webcamDropdown = page.locator('.device-input').nth(0);
     this.page = page;
-    this.generic = new Generic(this.page);
+    this.generic = new generic(this.page);
   }
 
   async getClientNames(): Promise<string[]> {
@@ -119,7 +119,7 @@ export class LobbyRoom {
     await expect(clientNames).toContain(selectedClient);
   }
 
-  async verifyCountdownTime() {
+  async verifyCountdownTime(): Promise<{ days: number, hours: number; minutes: number; seconds: number }> {
     const countdown = await this.getCountdownTime();
     const joinAllowed = await this.isJoinAllowed();
 

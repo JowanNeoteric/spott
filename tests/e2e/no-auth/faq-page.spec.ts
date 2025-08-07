@@ -1,22 +1,21 @@
 import { test } from '@playwright/test';
 import { common } from "../../../fixtures/common";
-import { Generic } from '../../../PO/methods/generic';
-import { faqPage } from '../../../PO/pages/faq';
+import { generic } from '../../../PO/methods/generic';
+import { faqPage } from '../../../PO/pages/faq'
 import * as path from 'path';
 
 const description = JSON.parse(JSON.stringify(require(path.join(__dirname, '../../../fixtures/e2e/faq.json'))));
 
 test.describe('FAQ page', () => {
-  let method: Generic;
+  let method: generic;
   let faq: faqPage;
 
   test.beforeEach(async ({ page }) => {
-    method = new Generic(page);
+    method = new generic(page);
     faq = new faqPage(page);
 
     await method.visitPage(common.url.e2e.faq);
     await method.waitForPageToFullLoad();
-    await page.route('**', route => route.continue());
   });
 
   test.describe('Page content: ', () => {

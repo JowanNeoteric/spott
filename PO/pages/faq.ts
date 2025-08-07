@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test"
 import { common } from "../../fixtures/common";
-import { Generic } from "../methods/generic"
+import { generic } from "../methods/generic"
 
 export class faqPage {
   readonly header: Locator;
@@ -11,10 +11,9 @@ export class faqPage {
   readonly pointBolded: Locator;
   readonly point: Locator;
   readonly dash: Locator;
+  readonly generic: generic;
 
-  readonly generic = new Generic(this.page);
-
-  constructor(private page: Page) {
+  constructor(page: Page) {
     this.header = page.getByTestId(common.selector.faqPage.header);
     this.logo = page.getByTestId(common.selector.generic.logo);
     this.paragraph = page.getByTestId(common.selector.faqPage.paragraph);

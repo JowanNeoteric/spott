@@ -1,22 +1,21 @@
 import { test } from '@playwright/test';
 import { common } from "../../../fixtures/common";
-import { Generic } from '../../../PO/methods/generic';
+import { generic } from '../../../PO/methods/generic';
 import { loginPage } from '../../../PO/pages/login';
 import { landingPage } from '../../../PO/pages/landing';
 
 test.describe('Login page', () => {
-  let method: Generic;
+  let method: generic;
   let login: loginPage;
   let landing: landingPage;
 
   test.beforeEach(async ({ page }) => {
-    method = new Generic(page);
+    method = new generic(page);
     login = new loginPage(page);
     landing = new landingPage(page);
 
     await method.visitPage(common.url.e2e.login);
     await method.waitForPageToFullLoad();
-    await page.route('**', route => route.continue());
   });
 
   test.describe('Verify: ', () => {

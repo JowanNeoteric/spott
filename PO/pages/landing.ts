@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test"
-import { Generic } from "../methods/generic"
+import { generic } from "../methods/generic"
 import { common } from "../../fixtures/common";
 
 export class landingPage {
@@ -22,10 +22,10 @@ export class landingPage {
   readonly joinSessionButton: Locator;
   readonly sessionDetailsPopup: Locator;
 
-  readonly generic: Generic;
+  readonly generic: generic;
 
   constructor(private page: Page) {
-    this.generic = new Generic(this.page);
+    this.generic = new generic(this.page);
     this.showMoreButton = page.getByText(/^\+[0-9]+\s[A-Za-z]+$/, { exact: true }).last();
     this.userMenuToggle = page.getByTestId(common.selector.landingPage.userMenuToggle);
     this.userMenuList = page.getByTestId(common.selector.landingPage.userMenuList);
@@ -35,13 +35,13 @@ export class landingPage {
     this.deleteSessionButton = page.getByTestId(common.selector.landingPage.popup.button.delete);
     this.confirmPopupButton = page.getByRole('button', { name: common.text.confirm });
     this.cancelPopupButton = page.getByRole('button', { name: common.text.cancel });
-    this.sessionSingleParticipantDetails = page.getByTestId('sessionDetailsPopup').locator(common.selector.landingPage.popup.sessionSingleData).nth(2);
-    this.sessionSingleParticipantJoined = page.getByTestId('sessionDetailsPopup').locator(common.selector.landingPage.popup.sessionSingleData).nth(3);
-    this.sessionActivityTypeDetails = page.getByTestId('sessionDetailsPopup').locator(common.selector.landingPage.popup.sessionSingleData).nth(4);
-    this.sessionTypeDetails = page.getByTestId('sessionDetailsPopup').locator(common.selector.landingPage.popup.sessionSingleData).first();
+    this.sessionSingleParticipantDetails = page.getByTestId(common.selector.landingPage.sessionDetailsPopup).locator(common.selector.landingPage.popup.sessionSingleData).nth(2);
+    this.sessionSingleParticipantJoined = page.getByTestId(common.selector.landingPage.sessionDetailsPopup).locator(common.selector.landingPage.popup.sessionSingleData).nth(3);
+    this.sessionActivityTypeDetails = page.getByTestId(common.selector.landingPage.sessionDetailsPopup).locator(common.selector.landingPage.popup.sessionSingleData).nth(4);
+    this.sessionTypeDetails = page.getByTestId(common.selector.landingPage.sessionDetailsPopup).locator(common.selector.landingPage.popup.sessionSingleData).first();
     this.calendarSpinner = page.locator(common.selector.generic.calendarSpinner);
     this.joinSessionButton = page.getByTestId(common.selector.landingPage.joinSessionButton);
-    this.sessionDetailsPopup = page.getByTestId('sessionDetailsPopup');
+    this.sessionDetailsPopup = page.getByTestId(common.selector.landingPage.sessionDetailsPopup);
   }
 
   async verifyConfirmationPopup(text: string) {
@@ -75,8 +75,8 @@ export class landingPage {
       return;
     }
     if (await this.showMoreButton.isVisible()) {
-      const sessionInList = this.page.locator('.fc-events-list-container').getByText(generatedTitle, { exact: true }).last();
-      const sessionList = this.page.locator('.fc-events-list-container');
+      const sessionInList = this.page.locator(common.selector.landingPage.sessionList).getByText(generatedTitle, { exact: true }).last();
+      const sessionList = this.page.locator(common.selector.landingPage.sessionList);
 
       await this.generic.clickElement(this.showMoreButton);
       await this.generic.isVisible(sessionList);
@@ -85,7 +85,4 @@ export class landingPage {
       await this.generic.isVisible(this.sessionDetailsPopup);
     }
   }
-
-
-
 }

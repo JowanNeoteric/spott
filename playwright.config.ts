@@ -54,9 +54,9 @@ export default defineConfig({
         permissions: ['camera', 'microphone'],
         headless: true,
         // trace: 'on',
-        screenshot: 'on',
+        screenshot: 'only-on-failure',
         bypassCSP: true,
-        video: 'on',
+        video: 'retain-on-failure',
         ...{ ...devices['Desktop Chrome'], viewport: { width: 1280, height: 832 } },
         storageState: 'e2e/.auth/user.json',
         launchOptions: {
